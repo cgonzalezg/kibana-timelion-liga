@@ -4,6 +4,10 @@
 var fs = require('fs');
 var parse = require('csv-parse');
 var transform = require('stream-transform');
+var elasticsearch = require('elasticsearch');
+var WritableBulk = require('elasticsearch-streams').WritableBulk;
+var TransformToBulk = require('elasticsearch-streams').TransformToBulk;
+var uuid = require('node-uuid');
 
 function parseGoal(goal, min) {
   // body...
@@ -17,7 +21,7 @@ function parseGoal(goal, min) {
 
 function parseGoals(goals) {
   var goalsJSON = [];
-  for (var i = 0; i < goals.length; i+=2) {
+  for (var i = 0; i < goals.length; i += 2) {
     if (goals[i] === '') return goalsJSON;
     var goalJSON = parseGoal(goals[i], goals[i + 1]);
     goalsJSON.push(goalJSON);
@@ -61,17 +65,33 @@ var transformer = transform(function(record, callback) {
   parallel: 10
 });
 
-var transformer2 = transform(function(record, callback) {
+var client = new elasticsearch.Client({
+  host: 'boot2docker.me:9200',
+});
+
+
+var bulkExec = function(bulkCmds, callback) {
+  client.bulk({
+    index: 'liga',
+    type: 'partidos',
+    body: bulkCmds
+  }, callback);
+};
+var ws = new WritableBulk(bulkExec);
+var toBulk = new TransformToBulk(function getIndexTypeId(doc) {
+  return {
+      _id: uuid.v4(),
+  };
+});
+
+
+var elasticBulk = transform(function(record, callback) {
   console.log('hola');
-  console.log('%j',record);
+  console.log('%j', record);
   callback();
-  // setTimeout(function() {
-  //   lineToJSON(record, callback);
-  //
-  //   // callback(null, record.join(' ')+'\n');
-  // }, 500);
 }, {
   parallel: 10
 });
-
-input.pipe(parser).pipe(transformer).pipe(transformer2);
+input.pipe(parser).pipe(transformer).pipe(toBulk).pipe(ws).on('close', function() {
+  console.log('finish');
+});
