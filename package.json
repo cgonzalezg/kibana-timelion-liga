@@ -20,7 +20,8 @@
   },
   "homepage": "https://gitlab.com/cgonzalezg/api-la-liga#README",
   "dependencies": {
-    "csv": "^0.4.6",
-    "elasticsearch": "^9.0.0"
+    "csv-parse": "^1.0.0",
+    "elasticsearch": "^9.0.0",
+    "stream-transform": "^0.1.1"
   }
 }
