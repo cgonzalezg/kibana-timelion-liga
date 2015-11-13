@@ -1,0 +1,22 @@
+{
+  "name": "api-la-liga",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/cgonzalezg/api-la-liga.git"
+  },
+  "keywords": [
+    "futbol"
+  ],
+  "author": "Cesar Gonzalez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/cgonzalezg/api-la-liga/issues"
+  },
+  "homepage": "https://gitlab.com/cgonzalezg/api-la-liga#README"
+}
