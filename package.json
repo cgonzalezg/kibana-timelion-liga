@@ -22,6 +22,7 @@
   "dependencies": {
     "csv-parse": "^1.0.0",
     "elasticsearch": "^9.0.0",
-    "stream-transform": "^0.1.1"
+    "stream-transform": "^0.1.1",
+    "underscore": "^1.8.3"
   }
 }
