@@ -22,6 +22,8 @@
   "dependencies": {
     "csv-parse": "^1.0.0",
     "elasticsearch": "^9.0.0",
+    "elasticsearch-streams": "0.0.9",
+    "node-uuid": "^1.4.7",
     "stream-transform": "^0.1.1",
     "underscore": "^1.8.3"
   }
