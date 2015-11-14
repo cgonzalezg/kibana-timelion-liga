@@ -8,14 +8,14 @@ var elasticsearch = require('elasticsearch');
 var WritableBulk = require('elasticsearch-streams').WritableBulk;
 var TransformToBulk = require('elasticsearch-streams').TransformToBulk;
 var uuid = require('node-uuid');
-
+var moment = require('moment');
 function parseGoal(goal, min) {
   // body...
   var teamGoal = goal.split("-");
   return {
     team: teamGoal[0],
     author: teamGoal[1],
-    minute: min
+    minute: parseInt(min)
   };
 }
 
@@ -37,12 +37,12 @@ function lineToJSON(record, callback) {
   var entry = {
     season: record[0],
     division: record[1],
-    jornada: record[2],
-    date: record[3],
+    jornada: parseInt(record[2]),
+    date: moment(record[3], "MM-DD-YYYY"),
     home: record[4],
     away: record[5],
-    home_goals: record[6],
-    away_goals: record[7],
+    home_goals: parseInt(record[6]),
+    away_goals: parseInt(record[7]),
     stadium: record[8],
     referee: record[9],
     goals: parseGoals(record.slice(10, record.length))
@@ -55,13 +55,7 @@ var parser = parse({
   delimiter: ','
 });
 var input = fs.createReadStream('./liga2831.csv');
-var transformer = transform(function(record, callback) {
-  setTimeout(function() {
-    lineToJSON(record, callback);
-
-    // callback(null, record.join(' ')+'\n');
-  }, 500);
-}, {
+var transformer = transform(lineToJSON, {
   parallel: 10
 });
 
@@ -80,17 +74,8 @@ var bulkExec = function(bulkCmds, callback) {
 var ws = new WritableBulk(bulkExec);
 var toBulk = new TransformToBulk(function getIndexTypeId(doc) {
   return {
-      _id: uuid.v4(),
+    _id: uuid.v4(),
   };
-});
-
-
-var elasticBulk = transform(function(record, callback) {
-  console.log('hola');
-  console.log('%j', record);
-  callback();
-}, {
-  parallel: 10
 });
 input.pipe(parser).pipe(transformer).pipe(toBulk).pipe(ws).on('close', function() {
   console.log('finish');
