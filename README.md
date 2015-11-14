@@ -3,7 +3,7 @@ KIBANA-TIMELION-LIGA
 This repo will install kibana, timelion, elasticsearch, in addition it will index some data and create some demo dashboards
 
 # Requisites
-it is need it to have installed docker and docker compose (optional).
+it is needed to have installed docker and docker compose (optional).
 
 **Installation**
 
