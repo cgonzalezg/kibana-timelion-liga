@@ -1,0 +1,31 @@
+{
+  "node": true,
+  "esnext": true,
+  "bitwise": true,
+  "camelcase": false,
+  "loopfunc": false,
+  "eqeqeq": true,
+  "eqnull": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": "nofunc",
+  "newcap": true,
+  "nonew": true,
+  "noarg": true,
+  "regexp": true,
+  "undef": true,
+  "unused": false,
+  "trailing": true,
+  "sub": true,
+  "maxlen": 200,
+  "globals": {
+    "user": false,
+    "next": false,
+    "describe": false,
+    "it": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false
+
+  }
+}
