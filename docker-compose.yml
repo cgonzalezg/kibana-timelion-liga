@@ -1,0 +1,17 @@
+elasticsearch:
+  image: elasticsearch
+  command: 'elasticsearch -Des.script.engine.groovy.inline.aggs=on -Des.network.bind_host=0.0.0.0'
+  ports:
+    - 9200:9200
+kibana:
+  image: kibana
+  links:
+    - elasticsearch:elasticsearch
+  ports:
+    - 5601:5601
+indexer:
+  build: .
+  links:
+    - elasticsearch:elasticsearch
+  ports:
+    - 3000:3000
