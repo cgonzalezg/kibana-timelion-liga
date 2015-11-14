@@ -1,0 +1,52 @@
+{
+  "partidos": {
+    "properties": {
+      "season": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "division": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "team": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "player": {
+        "type": "string",
+        "index": "not_analyzed"
+      },
+      "gamesPlayed": {
+        "type": "integer"
+      },
+      "gamesFinish": {
+        "type": "integer"
+      },
+      "gamesFirstTeam": {
+        "type": "integer"
+      },
+      "gamesSubtitute": {
+        "type": "integer"
+      },
+      "minutes": {
+        "type": "integer"
+      },
+      "injured": {
+        "type": "integer"
+      },
+      "yellowCards": {
+        "type": "integer"
+      },
+      "redCards": {
+        "type": "integer"
+      },
+      "goals": {
+        "type": "integer"
+      },
+      "failPenalties": {
+        "type": "integer"
+      }
+    }
+  }
+}
