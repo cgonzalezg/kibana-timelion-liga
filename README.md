@@ -1,4 +1,4 @@
-README
+KIBANA-LIGA
 ---
 This a project to show that kibana can be use to analyze more than logs ;)
 It will be use to analyze Spanish Liga data.

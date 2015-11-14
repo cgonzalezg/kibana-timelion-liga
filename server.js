@@ -6,25 +6,33 @@ var matchesFile = './data_matches/resultados.csv';
 var elasticsearch = require('elasticsearch');
 var async = require('async');
 var index = 'liga';
-
+var Conf = require('./conf.js');
 var client = new elasticsearch.Client({
-  host: 'boot2docker.me:9200',
+  host: process.env.ES_SERVER || 'elasticsearch:9200',
 });
 
 async.series({
+  wait4ES: function(cb) {
+    setTimeout(function() {
+      cb();
+    }, 10000);
+  },
   deletePartidos: function(cb) {
     console.log('DELETE', index);
-
     client.indices.delete({
       index: index
-    }, cb);
+    }, function(err, data) {
+      cb();
+    });
   },
   deletePlantillas: function(cb) {
     console.log('DELETE', index + 2);
 
     client.indices.delete({
       index: index + 2
-    }, cb);
+    }, function(err, data) {
+      cb();
+    });
   },
   createPartidos: function(cb) {
     console.log('CREATE', index);
