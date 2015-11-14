@@ -1,5 +1,5 @@
 {
-  "partidos": {
+  "plantillas": {
     "properties": {
       "season": {
         "type": "string",
