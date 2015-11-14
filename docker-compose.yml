@@ -4,7 +4,7 @@ elasticsearch:
   ports:
     - 9200:9200
 kibana:
-  image: kibana
+  build: kibana
   links:
     - elasticsearch:elasticsearch
   ports:

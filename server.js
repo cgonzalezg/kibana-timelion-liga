@@ -7,9 +7,28 @@ var elasticsearch = require('elasticsearch');
 var async = require('async');
 var index = 'liga';
 var Conf = require('./conf.js');
+var KibanaConf = require('./kibana/kibana-examples.json');
 var client = new elasticsearch.Client({
   host: process.env.ES_SERVER || 'elasticsearch:9200',
 });
+
+function configureKibana(callback) {
+  async.series({
+    createKibanaIndex: function(cb) {
+      client.indices.create('.kibana', cb);
+    },
+    index_pattern: function(cb) {
+      async.each(KibanaConf, function(kConf, next) {
+        client.index({
+          index: kConf._index,
+          type: kConf._type,
+          id: kConf._id,
+          body: kConf._source
+        }, next);
+      }, cb);
+    }
+  }, callback);
+}
 
 async.series({
   wait4ES: function(cb) {
@@ -51,7 +70,9 @@ async.series({
 }, function(callback) {
   Indexer.matches(matchesFile, index, function() {
     Indexer.plantillas('./data_matches/platillas.csv', index + 2, function() {
-      console.log('finish');
+      configureKibana(function() {
+        console.log('finish');
+      });
     });
   });
 });

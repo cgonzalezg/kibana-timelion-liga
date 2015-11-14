@@ -46,6 +46,15 @@
       },
       "failPenalties": {
         "type": "integer"
+      },
+      "startSeason": {
+        "type": "date"
+      },
+      "finishSeason": {
+        "type": "date"
+      },
+      "date": {
+        "type": "date"
       }
     }
   }
