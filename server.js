@@ -13,20 +13,14 @@ var client = new elasticsearch.Client({
 });
 
 function configureKibana(callback) {
-  async.series({
-    createKibanaIndex: function(cb) {
-      client.indices.create('.kibana', cb);
-    },
-    index_pattern: function(cb) {
-      async.each(KibanaConf, function(kConf, next) {
-        client.index({
-          index: kConf._index,
-          type: kConf._type,
-          id: kConf._id,
-          body: kConf._source
-        }, next);
-      }, cb);
-    }
+  async.each(KibanaConf, function(kConf, next) {
+    console.log(kConf._type);
+    client.index({
+      index: kConf._index,
+      type: kConf._type,
+      id: kConf._id,
+      body: kConf._source
+    }, next);
   }, callback);
 }
 

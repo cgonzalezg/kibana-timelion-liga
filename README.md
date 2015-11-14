@@ -1,7 +1,6 @@
-KIBANA-LIGA
+KIBANA-TIMELION-LIGA
 ---
-This a project to show that kibana can be use to analyze more than logs ;)
-It will be use to analyze Spanish Liga data.
+This repo will install kibana, timelion, elasticsearch, in addition it will index some data and create some demo dashboards
 
 # Requisites
 it is need it to have installed docker and docker compose (optional).
@@ -15,7 +14,8 @@ $ docker-compose up
 ```
 This will start a elasticsearch container, kibana container and an indexer that it will reindex the data from the csv files.
 
-
+Then kibana will run in the ***port 5601***.
+Also it will run the [timelion plugin](https://github.com/elastic/timelion) here you can get some more [info](https://www.elastic.co/blog/timelion-timeline)
 
 # Data structure
 
@@ -24,23 +24,4 @@ The indexer will create two indexes
 |INDEX|TYPE|MAPPING|
 |-----|-----|-----|
 |liga|partidos|[esMatchMapping.json]('./lib/esMatchMapping.json')|
-|liga|platillas|[esPlantillasMapping.json]('./lib/esPlantillasMapping.json')|
-
-### match type
-Example
-
-```json
-{
-
-}
-```
-
-### team
-
-Example
-
-```json
-{
-
-}
-```
+|liga2|platillas|[esPlantillasMapping.json]('./lib/esPlantillasMapping.json')|
